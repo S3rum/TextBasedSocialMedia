@@ -1,0 +1,28 @@
+CREATE DATABASE testDB;
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    plan VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    user_id INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    user_id INTEGER REFERENCES users(id),
+    post_id INTEGER REFERENCES posts(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
