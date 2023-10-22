@@ -1,28 +1,29 @@
-CREATE DATABASE testDB;
-
-
-
-
-
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     plan VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS posts (
+CREATE TABLE IF NOT EXISTS post (
     id SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     user_id INTEGER REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS comments (
+CREATE TABLE IF NOT EXISTS comment (
     id SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     user_id INTEGER REFERENCES users(id),
-    post_id INTEGER REFERENCES posts(id),
+    post_id INTEGER REFERENCES post(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS follower (
+    id SERIAL PRIMARY KEY,
+    follower_id INTEGER REFERENCES users(id),
+    followed_id INTEGER REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
